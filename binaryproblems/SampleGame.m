@@ -1,5 +1,5 @@
 function wr=SampleGame(x,r)
-p=WinRate(x);
+p=PMax(x);
 wr=0;
 for i=1:r
     if rand<=p
