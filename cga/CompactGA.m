@@ -15,7 +15,7 @@ while(t <= T-nParent && stop==0)
     for i=1:nParent
         for j=1:d
             if rand < p(j)
-                parents(i,j) = 1;
+                parents(i,j) = 1;                
             end
         end
         fitness(i) = noisyObjFunc(parents(i,:),1);
@@ -24,36 +24,34 @@ while(t <= T-nParent && stop==0)
 %     bestSoFar = parents(I(1),:);
     for i=1:nParent-1
         for j=i+1:nParent
-            if (isinf(fitness(i))==0 && isinf(fitness(j))==0)
-                if fitness(i) > fitness(j) % i wins
-                    for k=1:d
-                        if (parents(i,k) ~= parents(j,k))
-                            if (parents(i,k) == 1)
-                                p(k) = p(k) + 1/K;
-                            else
-                                p(k) = p(k) - 1/K;
-                            end
+            if fitness(i) > fitness(j) % i wins
+                for k=1:d
+                    if (parents(i,k) ~= parents(j,k))
+                        if (parents(i,k) == 1)
+                            p(k) = p(k) + 1/K;
+                        else
+                            p(k) = p(k) - 1/K;
                         end
                     end
-                else % j wins
-                    for k=1:d
-                        if (parents(i,k) ~= parents(j,k))
-                            if (parents(j,k) == 1)
-                                p(k) = p(k) + 1/K;
-                            else
-                                p(k) = p(k) - 1/K;
-                            end
+                end
+            else % j wins
+                for k=1:d
+                    if (parents(i,k) ~= parents(j,k))
+                        if (parents(j,k) == 1)
+                            p(k) = p(k) + 1/K;
+                        else
+                            p(k) = p(k) - 1/K;
                         end
                     end
-                end 
-            end
+                end
+            end 
         end
     end
 %     res = [res objFunc(bestSoFar)];
     sol = zeros(1,d);
     for i=1:d
         if p(i) > 0.5
-            sol(i) =1;
+            sol(i) = 1;
         end
     end
     res = [res objFunc(sol)];

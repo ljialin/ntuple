@@ -1,6 +1,3 @@
-function res=OneMax(x,r)
-if nargin < 2
-    
-end
+function res=OneMax(x)
 res=sum(x);
 end

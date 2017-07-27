@@ -6,8 +6,7 @@ d=100;
 T=1000;
 nTrials=100;
 
-K=[1 2 5 10 20 50 100];
-
+K=[1 0.01 0.1 0.5 2 5 10 20 50 100];
 meanCGA = zeros(length(K),T/2);
 stdCGA = zeros(length(K),T/2);
 
@@ -25,14 +24,12 @@ for j=length(K):-1:1
         cga(i,1:length(res)) = res;
         cga(i,length(res)+1:end) = res(end);
     end
-    meanCGA(j,:)=mean(cga);
-    stdCGA(j,:)=std(cga)/sqrt(nTrials);
-    boundedline(X, meanCGA(j,:), stdCGA(j,:), mycolor{j});
-    h(length(K)-j+1)=plot(X, meanCGA(j,:), mycolor{j}, 'LineWidth', 1);
+    boundedline(X, mean(cga), std(cga)/sqrt(nTrials), mycolor{j});
+    h(length(K)-j+1)=plot(X, mean(cga), mycolor{j}, 'LineWidth', 1);
     if (j==1)
         strlegend=sprintf('%s ''cGA, k=d''}, ''Location'', ''SouthEast'')', strlegend);
     else
-        strlegend=sprintf('%s ''cGA, k=%dd'',', strlegend, K(j));
+        strlegend=sprintf('%s ''cGA, k=%.2fd'',', strlegend, K(j));
     end
 end
 title(sprintf('%d-bit Noisy OneMax - std(Noise)=1', d));

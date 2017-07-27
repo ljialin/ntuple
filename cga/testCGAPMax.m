@@ -6,8 +6,7 @@ d=100;
 T=1000;
 nTrials=100;
 
-K=[1 2 5 10 20 50 100];
-
+K=[1 0.01 0.1 0.5 2 5 10 20 50 100];
 figure
 set(gca,'fontsize',18)
 hold on
@@ -26,7 +25,7 @@ for j=length(K):-1:1
     if (j==1)
         strlegend=sprintf('%s ''cGA, k=d''}, ''Location'', ''SouthEast'')', strlegend);
     else
-        strlegend=sprintf('%s ''cGA, k=%dd'',', strlegend, K(j));
+        strlegend=sprintf('%s ''cGA, k=%.2fd'',', strlegend, K(j));
     end
 end
 title(sprintf('%d-bit PMax', d));

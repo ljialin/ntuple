@@ -9,7 +9,7 @@ function [res]=SlidingWindowCompactGA(objFuncName,NoisyObjFuncName,d,K,w,T)
 w=w+1;
 addpath('../binaryproblems')
 p=ones(1,d)/2;
-fitness = ones(1,w)*(-Inf);
+fitness = ones(1,w)*NaN;
 parents = zeros(w,d);
 noisyObjFunc=str2func(NoisyObjFuncName);
 objFunc=str2func(objFuncName);
@@ -33,6 +33,8 @@ while(t < T && stop==0)
     for j=1:d
         if rand < p(j)
             parents(1,j) = 1;
+        else
+            parents(1,j) = 0;
         end
     end
     fitness(1) = noisyObjFunc(parents(1,:),1);
@@ -41,7 +43,7 @@ while(t < T && stop==0)
 %     idx = find(Y>-Inf,1,'last');
     for i=1:1
         for j=2:w
-            if (isinf(fitness(i))==0 && isinf(fitness(j))==0)
+            if (isnan(fitness(i))==0 && isnan(fitness(j))==0)
                 if fitness(i) > fitness(j) % i wins
                     for k=1:d
                         if (parents(i,k) ~= parents(j,k))
